@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="description" content="INFO.CF — L'Afrique centrale au cœur du monde."/>
+<title>INFO.CF — L'Afrique centrale au cœur du monde</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --green:#1a7a3c;--green2:#0f5a2a;--green3:#e8f5ed;
+  --red:#c8102e;--red2:#8b0a1f;--gold:#d4a017;--gold2:#f5c842;
+  --black:#0d0d0d;--white:#fdf8f0;--cream:#f5ede0;
+  --gray:#6b6560;--lg:#ede8e0;
+  --serif:'Libre Baskerville',serif;
+  --display:'Bebas Neue',sans-serif;
+  --ui:'Barlow',sans-serif;
+}
+html{scroll-behavior:smooth;}
+body{background:var(--white);color:var(--black);font-family:var(--ui);}
+a{text-decoration:none;color:inherit;}
+img{display:block;width:100%;}
+
+/* PROGRESS */
+#rp{position:fixed;top:0;left:0;height:3px;width:0;background:var(--gold);z-index:9999;transition:width .1s linear;}
+
+/* KENTE */
+.kente{height:6px;background:repeating-linear-gradient(90deg,var(--green) 0,var(--green) 33.3%,var(--gold) 33.3%,var(--gold) 66.6%,var(--red) 66.6%,var(--red) 100%);}
+
+/* NAV */
+nav{background:var(--black);position:sticky;top:0;z-index:100;}
+.nav-top{background:var(--green2);padding:4px 24px;display:flex;justify-content:space-between;align-items:center;}
+.nav-top span,.nav-top a{font-family:var(--ui);font-size:11px;color:rgba(255,255,255,.65);}
+.nav-top a:hover{color:var(--gold2);}
+.nav-top .left,.nav-top .right{display:flex;gap:14px;align-items:center;}
+.nav-main{max-width:1200px;margin:0 auto;padding:0 24px;display:flex;align-items:center;height:58px;gap:20px;}
+.logo{display:flex;align-items:center;gap:10px;cursor:pointer;flex-shrink:0;}
+.logo-txt{font-family:var(--display);font-size:28px;color:#fff;letter-spacing:1px;line-height:1;}
+.logo-txt span{color:var(--gold2);}
+.logo-tag{font-family:var(--ui);font-size:9px;color:rgba(255,255,255,.4);letter-spacing:2px;text-transform:uppercase;}
+.nav-links{display:flex;flex:1;margin-left:12px;}
+.nav-links a{color:rgba(255,255,255,.55);font-family:var(--ui);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;padding:0 12px;height:58px;display:flex;align-items:center;position:relative;transition:color .2s;}
+.nav-links a::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--gold2);transform:scaleX(0);transition:transform .25s;}
+.nav-links a:hover,.nav-links a.active{color:#fff;}
+.nav-links a:hover::after,.nav-links a.active::after{transform:scaleX(1);}
+.nav-actions{margin-left:auto;display:flex;gap:8px;align-items:center;}
+.btn-sub{background:var(--red);color:#fff;border:none;padding:8px 16px;font-family:var(--ui);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;cursor:pointer;transition:background .2s;}
+.btn-sub:hover{background:var(--red2);}
+.ham{background:none;border:none;cursor:pointer;padding:6px;display:none;flex-direction:column;gap:5px;}
+.ham span{display:block;width:20px;height:2px;background:#fff;border-radius:2px;transition:all .3s;}
+.ham.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.ham.open span:nth-child(2){opacity:0;}
+.ham.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+.mob-menu{background:var(--black);border-bottom:3px solid var(--green);max-height:0;overflow:hidden;transition:max-height .35s ease;}
+.mob-menu.open{max-height:500px;}
+.mob-menu a{display:flex;justify-content:space-between;padding:14px 20px;font-family:var(--ui);font-size:14px;font-weight:600;color:#bbb;text-transform:uppercase;letter-spacing:.8px;border-bottom:1px solid #1a1a1a;transition:color .2s;}
+.mob-menu a:hover{color:var(--gold2);}
+.mob-cta{padding:14px 20px;display:flex;gap:10px;}
+.mob-cta button{flex:1;padding:10px;font-family:var(--ui);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;border:none;cursor:pointer;}
+.btn-log{background:#1a1a1a;color:#aaa;border:1px solid #333!important;}
+.btn-sm{background:var(--red);color:#fff;}
+
+/* TICKER */
+.ticker{background:var(--red);overflow:hidden;height:34px;display:flex;align-items:center;}
+.ticker-lbl{background:var(--black);color:var(--gold2);font-family:var(--ui);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;padding:0 16px;height:100%;display:flex;align-items:center;gap:6px;white-space:nowrap;flex-shrink:0;}
+.live-dot{width:7px;height:7px;background:var(--red);border-radius:50%;animation:blink 1.2s infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+.ticker-wrap{overflow:hidden;flex:1;}
+.ticker-track{display:flex;white-space:nowrap;animation:scroll 35s linear infinite;}
+.ticker-track span{color:#fff;font-family:var(--ui);font-size:12px;font-weight:500;padding:0 28px;}
+.ticker-track span::before{content:"◆ ";opacity:.5;font-size:8px;}
+@keyframes scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* HERO */
+.hero-wrap{background:var(--black);padding:3px 0 0;}
+.hero-grid{max-width:1200px;margin:0 auto;padding:3px;display:grid;grid-template-columns:1fr 320px;gap:3px;}
+.hero-main{position:relative;overflow:hidden;cursor:pointer;min-height:460px;background:linear-gradient(160deg,#0a2a14,#1a5c30,#0a1a2a);}
+.geo-pat{position:absolute;inset:0;opacity:.06;background-image:repeating-linear-gradient(45deg,#fff 0,#fff 1px,transparent 0,transparent 8px);background-size:8px 8px;}
+.hero-ov{position:absolute;bottom:0;left:0;right:0;padding:28px 32px;background:linear-gradient(to top,rgba(0,0,0,.96) 0%,rgba(0,0,0,.4) 65%,transparent 100%);}
+.cat-badge{display:inline-flex;align-items:center;gap:5px;font-family:var(--ui);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;padding:4px 10px;color:#fff;margin-bottom:10px;}
+.bg-green{background:var(--green);}
+.bg-red{background:var(--red);}
+.bg-gold{background:var(--gold);color:var(--black)!important;}
+.hero-title{font-family:var(--serif);font-size:30px;font-weight:700;color:#fff;line-height:1.2;margin-bottom:10px;}
+.hero-lead{font-family:var(--ui);font-size:13px;color:rgba(255,255,255,.65);line-height:1.6;margin-bottom:12px;}
+.hero-meta{font-family:var(--ui);font-size:11px;color:rgba(255,255,255,.45);display:flex;align-items:center;gap:10px;}
+.hero-meta b{color:rgba(255,255,255,.75);}
+.mdot{width:2px;height:2px;background:#555;border-radius:50%;}
+.hero-side{display:flex;flex-direction:column;gap:3px;}
+.side-card{flex:1;position:relative;overflow:hidden;cursor:pointer;min-height:112px;}
+.side-card .hero-ov{padding:10px 14px;}
+.side-card .hero-title{font-size:13px;line-height:1.3;margin:0;}
+.side-card .cat-badge{font-size:9px;padding:3px 8px;margin-bottom:5px;}
+
+/* ADINKRA */
+.adinkra{height:32px;background:var(--gold);display:flex;align-items:center;justify-content:center;gap:20px;overflow:hidden;position:relative;}
+.adinkra::before{content:'';position:absolute;inset:0;background-image:repeating-linear-gradient(90deg,rgba(0,0,0,.08) 0,rgba(0,0,0,.08) 1px,transparent 1px,transparent 28px);}
+.adinkra span{font-size:13px;color:rgba(0,0,0,.3);position:relative;}
+
+/* SECTION HEADER */
+.sec-h{max-width:1200px;margin:0 auto;padding:28px 24px 14px;display:flex;align-items:center;gap:14px;}
+.sh-bar{width:5px;height:24px;flex-shrink:0;}
+.sec-h h2{font-family:var(--display);font-size:24px;letter-spacing:1px;}
+.sh-line{flex:1;height:1px;background:var(--lg);}
+.sh-see{font-family:var(--ui);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--green);cursor:pointer;white-space:nowrap;}
+
+/* ARTICLES GRID */
+.art-grid{max-width:1200px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:repeat(4,1fr);gap:22px;}
+.art-card{cursor:pointer;}
+.art-card:hover .art-t{color:var(--green);}
+.art-thumb{width:100%;aspect-ratio:16/9;overflow:hidden;margin-bottom:11px;}
+.art-fill{width:100%;height:100%;transition:transform .35s;}
+.art-card:hover .art-fill{transform:scale(1.05);}
+.art-cat{font-family:var(--ui);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--green);margin-bottom:6px;}
+.art-t{font-family:var(--serif);font-size:15px;font-weight:700;line-height:1.35;color:var(--black);margin-bottom:7px;transition:color .2s;}
+.art-ex{font-family:var(--ui);font-size:12px;color:var(--gray);line-height:1.55;font-style:italic;margin-bottom:8px;}
+.art-m{font-family:var(--ui);font-size:10.5px;color:#aaa;display:flex;gap:6px;align-items:center;}
+.art-m .d{width:2px;height:2px;background:#ccc;border-radius:50%;}
+
+/* OPINION */
+.op-strip{background:var(--black);margin-top:36px;}
+.op-inner{max-width:1200px;margin:0 auto;padding:36px 24px;}
+.op-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+.op-card{border-left:3px solid var(--gold);padding-left:18px;}
+.op-q{font-family:var(--serif);font-size:15px;color:#ccc;font-style:italic;line-height:1.65;margin-bottom:14px;}
+.op-auth{display:flex;align-items:center;gap:10px;}
+.op-av{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--ui);font-size:12px;font-weight:700;flex-shrink:0;}
+.op-name{font-family:var(--ui);font-size:12px;font-weight:700;color:#fff;}
+.op-role{font-family:var(--ui);font-size:11px;color:#555;}
+
+/* MID */
+.mid{max-width:1200px;margin:28px auto;padding:0 24px;display:grid;grid-template-columns:1fr 280px;gap:36px;}
+.list-art{display:flex;flex-direction:column;}
+.li{display:grid;grid-template-columns:110px 1fr;gap:14px;padding:18px 0;border-bottom:1px solid var(--lg);cursor:pointer;}
+.li:last-child{border-bottom:none;}
+.li:hover .art-t{color:var(--green);}
+.li-th{width:110px;height:74px;overflow:hidden;}
+.li-n{font-family:var(--display);font-size:30px;color:var(--lg);line-height:1;margin-bottom:5px;}
+.widget{margin-bottom:28px;}
+.wt{font-family:var(--ui);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--green2);border-top:3px solid var(--green);padding-top:10px;margin-bottom:14px;}
+.tr-item{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--lg);cursor:pointer;}
+.tr-item:last-child{border-bottom:none;}
+.tr-n{font-family:var(--display);font-size:24px;color:var(--lg);line-height:1;flex-shrink:0;width:26px;}
+.tr-t{font-family:var(--ui);font-size:13px;font-weight:600;color:var(--black);line-height:1.4;transition:color .2s;}
+.tr-item:hover .tr-t{color:var(--green);}
+.nl-box{background:var(--green2);padding:20px;border-top:3px solid var(--gold);}
+.nl-box h3{font-family:var(--display);font-size:20px;color:#fff;letter-spacing:1px;margin-bottom:6px;}
+.nl-box p{font-family:var(--ui);font-size:12px;color:rgba(255,255,255,.6);line-height:1.5;margin-bottom:14px;}
+.nl-box input{width:100%;padding:9px 12px;background:rgba(255,255,255,.1);border:none;color:#fff;font-family:var(--ui);font-size:12px;outline:none;margin-bottom:8px;}
+.nl-box input::placeholder{color:rgba(255,255,255,.35);}
+.nl-box button{width:100%;background:var(--gold);color:var(--black);border:none;padding:10px;font-family:var(--ui);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;cursor:pointer;}
+
+/* FOOTER */
+.site-footer{background:var(--black);}
+.foot-main{max-width:1200px;margin:0 auto;padding:40px 24px 28px;display:grid;grid-template-columns:280px 1fr;gap:48px;border-bottom:1px solid #1a1a1a;}
+.f-logo{font-family:var(--display);font-size:38px;color:#fff;letter-spacing:1px;line-height:1;}
+.f-logo span{color:var(--gold2);}
+.f-tag{font-family:var(--ui);font-size:11px;color:#555;font-style:italic;margin:6px 0 16px;}
+.f-desc{font-family:var(--ui);font-size:12px;color:#444;line-height:1.65;}
+.foot-links{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+.foot-col h4{font-family:var(--ui);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--gold);margin-bottom:14px;}
+.foot-col a{display:block;font-family:var(--ui);font-size:12px;color:#555;margin-bottom:9px;transition:color .2s;}
+.foot-col a:hover{color:#fff;}
+.foot-bot{max-width:1200px;margin:0 auto;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;}
+.f-copy{font-family:var(--ui);font-size:11px;color:#333;}
+.f-soc{display:flex;gap:8px;}
+.soc{width:34px;height:34px;background:#111;border:1px solid #1a1a1a;color:#555;font-family:var(--ui);font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;}
+.soc:hover{background:var(--green);color:#fff;border-color:var(--green);}
+
+/* BOTTOM NAV MOBILE */
+.bot-nav{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--black);border-top:1px solid #1a1a1a;z-index:200;}
+.bn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px 4px;gap:3px;cursor:pointer;}
+.bn svg{color:#555;}
+.bn span{font-family:var(--ui);font-size:9px;color:#555;font-weight:600;text-transform:uppercase;letter-spacing:.5px;}
+.bn.active svg,.bn.active span{color:var(--gold2);}
+
+/* RESPONSIVE */
+@media(max-width:1024px){
+  .art-grid{grid-template-columns:repeat(2,1fr);}
+  .hero-grid{grid-template-columns:1fr;}
+  .hero-side{flex-direction:row;}
+}
+@media(max-width:768px){
+  .nav-top{display:none;}
+  .nav-links{display:none;}
+  .ham{display:flex;}
+  .art-grid{grid-template-columns:1fr;padding:0 16px;}
+  .mid{grid-template-columns:1fr;padding:0 16px;}
+  .op-grid{grid-template-columns:1fr;}
+  .hero-title{font-size:22px;}
+  .hero-ov{padding:16px;}
+  .sec-h{padding:20px 16px 10px;}
+  .foot-main{grid-template-columns:1fr;gap:28px;}
+  .foot-links{grid-template-columns:repeat(2,1fr);}
+  .foot-bot{flex-direction:column;gap:12px;}
+  .bot-nav{display:flex;}
+  body{padding-bottom:60px;}
+}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.hero-grid{animation:fadeUp .5s ease both;}
+.art-grid{animation:fadeUp .5s .1s ease both;}
+</style>
+</head>
+<body>
+
+<div id="rp"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-top">
+    <div class="left">
+      <span id="navDate">Lundi 16 mars 2026</span>
+      <span>·</span>
+      <span>Bangui · Paris · Yaoundé · New York</span>
+    </div>
+    <div class="right">
+      <a href="#">Connexion</a>
+      <a href="#">Newsletter</a>
+      <a href="#">Application</a>
+      <a href="#">Contact</a>
+    </div>
+  </div>
+  <div class="nav-main">
+    <div class="logo">
+      <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+        <circle cx="20" cy="20" r="19" fill="#1a7a3c" stroke="#d4a017" stroke-width="1.5"/>
+        <path d="M5 20 Q20 8 35 20 Q20 32 5 20Z" fill="none" stroke="#d4a017" stroke-width="1.2"/>
+        <circle cx="20" cy="20" r="4" fill="#d4a017"/>
+        <line x1="20" y1="6" x2="20" y2="34" stroke="#d4a017" stroke-width="1" stroke-dasharray="2 3"/>
+        <line x1="6" y1="20" x2="34" y2="20" stroke="#d4a017" stroke-width="1" stroke-dasharray="2 3"/>
+      </svg>
+      <div>
+        <div class="logo-txt">INFO<span>.CF</span></div>
+        <div class="logo-tag">L'Afrique au cœur du monde</div>
+      </div>
+    </div>
+    <div class="nav-links">
+      <a href="#" class="active">Accueil</a>
+      <a href="#">Monde</a>
+      <a href="#">Afrique</a>
+      <a href="#">Politique</a>
+      <a href="#">Économie</a>
+      <a href="#">Société</a>
+      <a href="#">Culture</a>
+    </div>
+    <div class="nav-actions">
+      <button class="btn-sub">S'abonner</button>
+      <button class="ham" id="hamBtn"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+  <div class="mob-menu" id="mobMenu">
+    <a href="#">Accueil <span>›</span></a>
+    <a href="#">Monde <span>›</span></a>
+    <a href="#">Afrique <span>›</span></a>
+    <a href="#">Politique <span>›</span></a>
+    <a href="#">Économie <span>›</span></a>
+    <a href="#">Société <span>›</span></a>
+    <a href="#">Culture <span>›</span></a>
+    <div class="mob-cta">
+      <button class="btn-log">Connexion</button>
+      <button class="btn-sm">S'abonner</button>
+    </div>
+  </div>
+</nav>
+
+<div class="kente"></div>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-lbl"><div class="live-dot"></div>EN DIRECT</div>
+  <div class="ticker-wrap">
+    <div class="ticker-track">
+      <span>Sommet de l'UA : les chefs d'État se réunissent à Addis-Abeba pour un agenda historique</span>
+      <span>CEMAC : la BEAC maintient son taux directeur à 5,25% pour le second trimestre</span>
+      <span>Centrafrique : signature d'un accord de coopération avec l'Union Européenne</span>
+      <span>Congo-Brazzaville : plan de diversification économique sur 5 ans annoncé</span>
+      <span>Tchad : élections municipales prévues pour le mois d'avril prochain</span>
+      <span>Sommet de l'UA : les chefs d'État se réunissent à Addis-Abeba pour un agenda historique</span>
+      <span>CEMAC : la BEAC maintient son taux directeur à 5,25% pour le second trimestre</span>
+      <span>Centrafrique : signature d'un accord de coopération avec l'Union Européenne</span>
+      <span>Congo-Brazzaville : plan de diversification économique sur 5 ans annoncé</span>
+      <span>Tchad : élections municipales prévues pour le mois d'avril prochain</span>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="hero-wrap">
+  <div class="hero-grid">
+    <div class="hero-main">
+      <div class="geo-pat"></div>
+      <div class="hero-ov">
+        <div class="cat-badge bg-green">
+          <svg width="6" height="6" viewBox="0 0 8 8"><circle cx="4" cy="4" r="4" fill="white"/></svg>
+          À la une · Géopolitique
+        </div>
+        <h1 class="hero-title">L'Union Africaine exige un siège permanent au Conseil de Sécurité de l'ONU lors du sommet de New York</h1>
+        <p class="hero-lead">Une coalition inédite de 54 nations africaines présente un front uni face aux grandes puissances mondiales pour réclamer une réforme historique.</p>
+        <div class="hero-meta">
+          <b>Élise Ndombi</b><span class="mdot"></span>
+          <span>il y a 18 min</span><span class="mdot"></span>
+          <span>8 min de lecture</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-side">
+      <div class="side-card" style="background:linear-gradient(135deg,#1a0a2e,#3d1a6b);">
+        <div class="hero-ov">
+          <div class="cat-badge bg-red">Économie</div>
+          <div class="hero-title">AfCFTA : les échanges intra-africains franchissent 2 milliards de dollars</div>
+        </div>
+      </div>
+      <div class="side-card" style="background:linear-gradient(135deg,#2a0a0a,#6b1a1a);">
+        <div class="hero-ov">
+          <div class="cat-badge bg-red">Sécurité</div>
+          <div class="hero-title">Sahel : accord de cessez-le-feu fragile sous médiation mauritanienne</div>
+        </div>
+      </div>
+      <div class="side-card" style="background:linear-gradient(135deg,#0a1a2a,#1a3d6b);">
+        <div class="hero-ov">
+          <div class="cat-badge bg-gold">Tech</div>
+          <div class="hero-title">Start-up africaines : 1,2 milliard de levées de fonds au premier trimestre</div>
+        </div>
+      </div>
+      <div class="side-card" style="background:linear-gradient(135deg,#1a2a0a,#3d6b1a);">
+        <div class="hero-ov">
+          <div class="cat-badge bg-green">Société</div>
+          <div class="hero-title">67% des jeunes africains veulent construire leur avenir sur le continent</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ADINKRA -->
+<div class="adinkra">
+  <span>✦</span><span>◈</span><span>❖</span><span>✦</span><span>◈</span><span>❖</span>
+  <span>✦</span><span>◈</span><span>❖</span><span>✦</span><span>◈</span><span>❖</span>
+  <span>✦</span><span>◈</span><span>❖</span><span>✦</span><span>◈</span>
+</div>
+
+<!-- DERNIÈRES NOUVELLES -->
+<div class="sec-h">
+  <div class="sh-bar" style="background:var(--red);"></div>
+  <h2>Dernières Nouvelles</h2>
+  <div class="sh-line"></div>
+  <span class="sh-see">Voir tout →</span>
+</div>
+<div class="art-grid">
+  <div class="art-card">
+    <div class="art-thumb"><div class="art-fill" style="background:linear-gradient(135deg,#0d2b16,#1a5c30);"></div></div>
+    <div class="art-cat">Politique · RDC</div>
+    <div class="art-t">Présidentielle en RDC : la CENI fixe la date du scrutin au 12 novembre</div>
+    <div class="art-ex">Le processus électoral s'accélère malgré les tensions dans l'est du pays.</div>
+    <div class="art-m"><span>Karine Molondo</span><span class="d"></span><span>1h</span><span class="d"></span><span>3 min</span></div>
+  </div>
+  <div class="art-card">
+    <div class="art-thumb"><div class="art-fill" style="background:linear-gradient(135deg,#2b0d0d,#5c1a1a);"></div></div>
+    <div class="art-cat" style="color:var(--red);">Monde</div>
+    <div class="art-t">Moyen-Orient : négociations de paix à Doha sous égide américaine</div>
+    <div class="art-ex">Un accord sur les otages pourrait ouvrir la voie à une trêve durable.</div>
+    <div class="art-m"><span>Reuters</span><span class="d"></span><span>2h</span><span class="d"></span><span>4 min</span></div>
+  </div>
+  <div class="art-card">
+    <div class="art-thumb"><div class="art-fill" style="background:linear-gradient(135deg,#2b2b0d,#5c5c1a);"></div></div>
+    <div class="art-cat" style="color:var(--gold);">Économie</div>
+    <div class="art-t">Franc CFA : la CEMAC lance une consultation inédite sur la souveraineté monétaire</div>
+    <div class="art-ex">Experts et ministres réunis à Yaoundé pour explorer des alternatives.</div>
+    <div class="art-m"><span>Paul Essomba</span><span class="d"></span><span>3h</span><span class="d"></span><span>6 min</span></div>
+  </div>
+  <div class="art-card">
+    <div class="art-thumb"><div class="art-fill" style="background:linear-gradient(135deg,#0d1a2b,#1a3d5c);"></div></div>
+    <div class="art-cat">Afrique · Kenya</div>
+    <div class="art-t">Nairobi devient le premier hub africain officiel de Google pour l'IA</div>
+    <div class="art-ex">Un investissement de 300 millions de dollars qui positionne l'Afrique de l'Est.</div>
+    <div class="art-m"><span>AFP</span><span class="d"></span><span>4h</span><span class="d"></span><span>3 min</span></div>
+  </div>
+</div>
+
+<!-- OPINIONS -->
+<div class="op-strip">
+  <div class="op-inner">
+    <div class="sec-h" style="padding:0 0 24px;border-bottom:1px solid #1a1a1a;margin-bottom:24px;">
+      <div class="sh-bar" style="background:var(--gold);"></div>
+      <h2 style="color:#fff;">Tribunes & Analyses</h2>
+      <div class="sh-line" style="background:#222;"></div>
+      <span class="sh-see" style="color:var(--gold2);">Toutes →</span>
+    </div>
+    <div class="op-grid">
+      <div class="op-card">
+        <p class="op-q">"L'Afrique centrale possède les ressources pour devenir la première puissance économique du continent d'ici 2040. Ce qui manque, c'est la volonté politique commune."</p>
+        <div class="op-auth">
+          <div class="op-av" style="background:var(--green);">DM</div>
+          <div><div class="op-name">Dr. David Maïdou</div><div class="op-role">Économiste, Université de Bangui</div></div>
+        </div>
+      </div>
+      <div class="op-card">
+        <p class="op-q">"La démocratie ne se construit pas par les urnes seules. Elle se construit dans les rues, les écoles et les marchés, là où le peuple vit vraiment."</p>
+        <div class="op-auth">
+          <div class="op-av" style="background:var(--red);">FN</div>
+          <div><div class="op-name">Fatima Nzinga</div><div class="op-role">Juriste & Militante, Brazzaville</div></div>
+        </div>
+      </div>
+      <div class="op-card">
+        <p class="op-q">"On ne peut pas demander à l'Afrique de préserver ses forêts sans lui offrir une compensation juste pour ce service rendu à l'humanité entière."</p>
+        <div class="op-auth">
+          <div class="op-av" style="background:var(--gold);color:var(--black);">PO</div>
+          <div><div class="op-name">Prof. Omer Pandi</div><div class="op-role">Climatologue, Université de Douala</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MID -->
+<div class="sec-h">
+  <div class="sh-bar" style="background:var(--green);"></div>
+  <h2>À ne pas manquer</h2>
+  <div class="sh-line"></div>
+  <span class="sh-see">Archives →</span>
+</div>
+<div class="mid">
+  <div class="list-art">
+    <div class="li">
+      <div class="li-th" style="background:linear-gradient(135deg,#0d2b16,#2d6a4f);"></div>
+      <div><div class="li-n">01</div><div class="art-cat">Société</div><div class="art-t">Rwanda, 32 ans après : la mémoire comme fondation d'une nation réconciliée</div><div class="art-m">Solange Uwimana · 5h · 8 min</div></div>
+    </div>
+    <div class="li">
+      <div class="li-th" style="background:linear-gradient(135deg,#2b1a0d,#8b4513);"></div>
+      <div><div class="li-n">02</div><div class="art-cat" style="color:var(--gold);">Culture</div><div class="art-t">Le cinéma d'Afrique centrale s'impose sur la scène internationale</div><div class="art-m">Oumar Bakari · 6h · 5 min</div></div>
+    </div>
+    <div class="li">
+      <div class="li-th" style="background:linear-gradient(135deg,#0d1a2b,#1e3a5f);"></div>
+      <div><div class="li-n">03</div><div class="art-cat" style="color:var(--red);">Santé</div><div class="art-t">OMS : alerte sur la recrudescence du paludisme résistant en zone tropicale</div><div class="art-m">Reuters · 7h · 4 min</div></div>
+    </div>
+    <div class="li">
+      <div class="li-th" style="background:linear-gradient(135deg,#2b0d1a,#8b1a3a);"></div>
+      <div><div class="li-n">04</div><div class="art-cat">Monde</div><div class="art-t">Washington–Pékin : la guerre commerciale entre dans une nouvelle phase critique</div><div class="art-m">AFP · 9h · 6 min</div></div>
+    </div>
+  </div>
+  <aside>
+    <div class="widget">
+      <div class="wt">Tendances</div>
+      <div class="tr-item"><div class="tr-n">1</div><div class="tr-t">UA — Siège permanent au Conseil de Sécurité</div></div>
+      <div class="tr-item"><div class="tr-n">2</div><div class="tr-t">Franc CFA : le grand débat relancé</div></div>
+      <div class="tr-item"><div class="tr-n">3</div><div class="tr-t">Bangui Renaissance : la ville se réinvente</div></div>
+      <div class="tr-item"><div class="tr-n">4</div><div class="tr-t">AfCFTA : record d'échanges intra-africains</div></div>
+      <div class="tr-item"><div class="tr-n">5</div><div class="tr-t">Kenya : Nairobi hub IA officiel de Google</div></div>
+    </div>
+    <div class="nl-box">
+      <h3>La Matinale</h3>
+      <p>L'essentiel de l'actualité africaine chaque matin à 6h30 — gratuit.</p>
+      <input type="email" placeholder="votre@email.com"/>
+      <button>Je m'abonne gratuitement</button>
+    </div>
+  </aside>
+</div>
+
+<!-- FOOTER -->
+<div class="kente"></div>
+<footer class="site-footer">
+  <div class="foot-main">
+    <div>
+      <div class="f-logo">INFO<span>.CF</span></div>
+      <div class="f-tag">L'Afrique centrale au cœur du monde.</div>
+      <p class="f-desc">INFO.CF est un média numérique indépendant dédié à l'actualité de l'Afrique centrale et internationale. Fondé à Bangui, pensé pour le monde.</p>
+    </div>
+    <div class="foot-links">
+      <div class="foot-col"><h4>Rubriques</h4><a href="#">Monde</a><a href="#">Afrique</a><a href="#">Politique</a><a href="#">Économie</a><a href="#">Culture</a></div>
+      <div class="foot-col"><h4>Le média</h4><a href="#">À propos</a><a href="#">Notre équipe</a><a href="#">Charte éditoriale</a><a href="#">Rejoindre</a></div>
+      <div class="foot-col"><h4>Services</h4><a href="#">Newsletter</a><a href="#">Abonnement</a><a href="#">Application</a><a href="#">Podcast</a></div>
+      <div class="foot-col"><h4>Légal</h4><a href="#">Mentions légales</a><a href="#">Confidentialité</a><a href="#">CGU</a><a href="#">Cookies</a></div>
+    </div>
+  </div>
+  <div class="foot-bot">
+    <span class="f-copy">© 2026 INFO.CF — Bangui, République Centrafricaine</span>
+    <div class="f-soc">
+      <button class="soc">X</button><button class="soc">fb</button>
+      <button class="soc">in</button><button class="soc">yt</button><button class="soc">tg</button>
+    </div>
+  </div>
+</footer>
+
+<!-- BOTTOM NAV MOBILE -->
+<nav class="bot-nav">
+  <div class="bn active"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Accueil</span></div>
+  <div class="bn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span>Recherche</span></div>
+  <div class="bn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg><span>Rubriques</span></div>
+  <div class="bn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg><span>Alertes</span></div>
+  <div class="bn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Profil</span></div>
+</nav>
+
+<script>
+const days=['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
+const months=['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+const d=new Date();
+document.getElementById('navDate').textContent=`${days[d.getDay()]} ${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
+
+document.getElementById('hamBtn').addEventListener('click',function(){
+  this.classList.toggle('open');
+  document.getElementById('mobMenu').classList.toggle('open');
+});
+
+window.addEventListener('scroll',()=>{
+  const el=document.documentElement;
+  const pct=(el.scrollTop/(el.scrollHeight-el.clientHeight))*100;
+  document.getElementById('rp').style.width=pct+'%';
+});
+
+document.querySelectorAll('.nav-links a').forEach(a=>{
+  a.addEventListener('click',function(){
+    document.querySelectorAll('.nav-links a').forEach(x=>x.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+
+document.querySelectorAll('.bn').forEach(b=>{
+  b.addEventListener('click',function(){
+    document.querySelectorAll('.bn').forEach(x=>x.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)';}
+  });
+},{threshold:0.1});
+document.querySelectorAll('.art-card,.li,.op-card').forEach(el=>{
+  el.style.opacity='0';el.style.transform='translateY(16px)';
+  el.style.transition='opacity .4s ease,transform .4s ease';
+  observer.observe(el);
+});
+</script>
+</body>
+</html>
