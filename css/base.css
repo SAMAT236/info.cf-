@@ -1,0 +1,107 @@
+/* ============================================
+   INFO.CF — BASE STYLES & VARIABLES
+   ============================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Barlow:wght@400;500;600;700&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  /* Couleurs panafricaines */
+  --green:      #1a7a3c;
+  --green2:     #0f5a2a;
+  --green3:     #e8f5ed;
+  --red:        #c8102e;
+  --red2:       #8b0a1f;
+  --gold:       #d4a017;
+  --gold2:      #f5c842;
+  --blue:       #1a3a8f;
+  --blue2:      #e8edf8;
+
+  /* Neutres */
+  --black:      #0d0d0d;
+  --white:      #fdf8f0;
+  --cream:      #f5ede0;
+  --gray:       #6b6560;
+  --lightgray:  #ede8e0;
+
+  /* Typographie */
+  --serif:   'Libre Baskerville', serif;
+  --display: 'Bebas Neue', sans-serif;
+  --ui:      'Barlow', sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--white);
+  color: var(--black);
+  font-family: var(--ui);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+img { display: block; width: 100%; height: auto; }
+a { text-decoration: none; color: inherit; }
+button { cursor: pointer; font-family: var(--ui); }
+
+/* ── UTILITAIRES ── */
+.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+.kente-line {
+  height: 6px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--green)  0, var(--green)  33.3%,
+    var(--gold)   33.3%, var(--gold)  66.6%,
+    var(--red)    66.6%, var(--red)   100%
+  );
+}
+
+.adinkra-divider {
+  height: 32px;
+  background: var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  overflow: hidden;
+  position: relative;
+}
+.adinkra-divider::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(90deg, rgba(0,0,0,.08) 0, rgba(0,0,0,.08) 1px, transparent 1px, transparent 28px);
+}
+.adinkra-divider span { font-size: 13px; color: rgba(0,0,0,.3); position: relative; }
+
+/* ── BADGE CATÉGORIE ── */
+.cat-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--ui);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  padding: 4px 10px;
+  color: #fff;
+}
+.cat-badge.green  { background: var(--green); }
+.cat-badge.red    { background: var(--red); }
+.cat-badge.gold   { background: var(--gold); color: var(--black); }
+.cat-badge.blue   { background: var(--blue); }
+
+/* ── PROGRESS BAR LECTURE ── */
+#readProgress {
+  position: fixed;
+  top: 0; left: 0;
+  height: 3px;
+  width: 0%;
+  background: var(--gold);
+  z-index: 9999;
+  transition: width .1s linear;
+}
